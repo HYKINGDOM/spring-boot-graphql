@@ -5,10 +5,7 @@ import com.google.common.io.Resources;
 import com.org.springbootgraphql.service.BookService;
 import graphql.GraphQL;
 import graphql.schema.GraphQLSchema;
-import graphql.schema.idl.RuntimeWiring;
-import graphql.schema.idl.SchemaGenerator;
-import graphql.schema.idl.SchemaParser;
-import graphql.schema.idl.TypeDefinitionRegistry;
+import graphql.schema.idl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
@@ -16,11 +13,14 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import static graphql.schema.idl.TypeRuntimeWiring.newTypeWiring;
 
 /**
  * schema.graphqls
+ *
  * @author HY
  */
 @Component
@@ -31,6 +31,16 @@ public class SchemaGraphQLProvider {
     private GraphQLDataFetchers graphQLDataFetchers;
 
     private GraphQL graphQL;
+
+    private static Map<String, Object> objectObjectHashMap = new HashMap<>();
+
+    static {
+        objectObjectHashMap.put("NOVEL", "NOVEL");
+        objectObjectHashMap.put("BIOGRAPHY", "BIOGRAPHY");
+        objectObjectHashMap.put("TECHNOLOGY", "TECHNOLOGY");
+        objectObjectHashMap.put("DOCUMENTARY", "DOCUMENTARY");
+
+    }
 
     @PostConstruct
     public void init() throws IOException {
@@ -55,6 +65,8 @@ public class SchemaGraphQLProvider {
                         .dataFetcher("author", graphQLDataFetchers.getAuthorDataFetcher()))
                 .type(newTypeWiring("Query")
                         .dataFetcher("author", graphQLDataFetchers.getAllBookDataFetcher()))
+                .type(newTypeWiring("Query")
+                        .dataFetcher("bookType", graphQLDataFetchers.getAllEnum()))
                 .build();
     }
 

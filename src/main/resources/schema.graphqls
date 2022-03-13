@@ -1,6 +1,7 @@
 type Query {
     bookById(id: ID): Book
     author(id: ID): Author
+    bookType(type: BookType ): BookType!
 }
 
 type Book {
@@ -14,4 +15,12 @@ type Author {
     id: ID
     firstName: String
     lastName: String
+}
+
+
+enum BookType {
+  NOVEL
+  BIOGRAPHY
+  TECHNOLOGY
+  DOCUMENTARY
 }

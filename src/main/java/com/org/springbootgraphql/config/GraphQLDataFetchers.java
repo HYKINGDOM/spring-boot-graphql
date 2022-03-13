@@ -2,6 +2,7 @@ package com.org.springbootgraphql.config;
 
 import com.org.springbootgraphql.entity.Author;
 import com.org.springbootgraphql.entity.Book;
+import com.org.springbootgraphql.entity.BookType;
 import com.org.springbootgraphql.service.AuthorService;
 import com.org.springbootgraphql.service.BookService;
 import graphql.schema.DataFetcher;
@@ -38,6 +39,13 @@ public class GraphQLDataFetchers {
         return dataFetchingEnvironment -> {
             String authorId = dataFetchingEnvironment.getArgument("id");
             return authorService.findAuthorById(authorId);
+        };
+    }
+
+    public DataFetcher getAllEnum() {
+        return dataFetchingEnvironment -> {
+            String authorId = dataFetchingEnvironment.getArgument("type");
+            return BookType.NOVEL;
         };
     }
 }
