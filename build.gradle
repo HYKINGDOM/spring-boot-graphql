@@ -1,0 +1,41 @@
+plugins {
+    id 'org.springframework.boot' version '2.6.4'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+group = 'com.org'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    implementation group: 'com.google.guava', name: 'guava', version: '31.1-jre'
+
+//    implementation group: 'com.graphql-java-kickstart', name: 'graphql-spring-boot-starter', version: '12.0.0'
+
+    // https://mvnrepository.com/artifact/com.graphql-java/graphql-java
+    implementation group: 'com.graphql-java', name: 'graphql-java', version: '17.3'
+
+    // https://mvnrepository.com/artifact/com.graphql-java/graphql-java-spring-boot-starter-webmvc
+    implementation group: 'com.graphql-java', name: 'graphql-java-spring-boot-starter-webmvc', version: '2021-10-25T04-50-54-fbc162f'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
